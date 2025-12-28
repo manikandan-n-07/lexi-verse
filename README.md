@@ -1,1 +1,1 @@
-# lexi-verse
+# lexi-verse translator

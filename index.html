@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LexiVerse - Instant Translator & Dictionary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="src/img/logotranslator.png" type="image/png"> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style/style.css">
+    
+</head>
+<body class="light"> 
+    <div id="app" class="min-h-screen flex items-start justify-center p-4 md:p-8">
+        <div class="w-full max-w-4xl mt-12 bg-white card rounded-xl shadow-xl p-6 md:p-10 relative">
+            
+            <header class="text-center">
+                <div class="header-container">
+                    
+                        
+                        <div class="menu-top-left">
+                        <button class="menu-icon-btn text-xl font-extrabold" onclick="toggleSidebar()" title="Open Navigation Menu">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                        </button>
+                    </div>
+
+                        
+                        <div class="menu-top-right">
+                            <button id="accountButton" onclick="openAccountModal()" class="header-btn text-sm font-medium text-gray-700 hover:text-indigo-600">
+                                <svg class="w-5 h-5 md:mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                <span id="accountStatus">Account</span>
+                             </button>
+                           
+                             <button onclick="openHistoryModal()" class="header-btn text-sm font-medium text-gray-700 hover:text-indigo-600">
+                                 <svg class="w-5 h-5 md:mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                 <span>History</span>
+                             </button>
+
+                             <button id="settingsButton" onclick="openSettingsModal()" class="header-btn text-sm font-medium text-gray-700 hover:text-indigo-600">
+                                 <svg class="w-5 h-5 md:mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                 <span>Settings</span>
+                               </button>
+                           
+                           
+                        </div>
+                    
+                        <h1 class="text-3xl font-extrabold text-gray-900 mx-auto w-full pt-16 md:pt-11">
+                            <div class="lexiverse-logo-container"><img src="src/img/logotranslator.png" alt="Logo" class="small-logo-img"></div>
+                            LexiVerse
+                        </h1>
+                </div>
+                <p class="text-gray-500 text-lg mb-4">Instant Translator & Dictionary. Type in either box.</p>
+            </header>
+
+            <div class="flex flex-col sm:flex-row gap-4 items-center mb-8">
+                <div class="flex-1 w-full">
+                    <label for="langA" class="block text-sm font-medium text-gray-700 mb-1">Language A (Source)</label>
+                    <select id="langA" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 bg-gray-50 transition-all duration-300">
+                        </select>
+                </div>
+
+                <div class="flex items-center justify-center p-2">
+                    <button id="swapButton" onclick="swapLanguages()" class="btn-icon p-2 text-gray-500 hover:text-indigo-600 transition duration-150 ease-in-out rounded-full bg-gray-100 hover:bg-indigo-100 shadow-md" title="Swap Languages">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                    </button>
+                </div>
+
+                <div class="flex-1 w-full">
+                    <label for="langB" class="block text-sm font-medium text-gray-700 mb-1">Language B (Target)</label>
+                    <select id="langB" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 bg-gray-50 transition-all duration-300">
+                        </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div id="columnA" class="space-y-2 order-1">
+                    <div class="flex items-center justify-between">
+                        <label id="labelA" for="inputTextA" class="block text-xl font-bold text-gray-800">Language A</label>
+                        <!-- START: Language A Speak/Stop Buttons -->
+                        <div class="flex items-center">
+                            <button id="speakButtonA" onclick="speakResult('A')" disabled class="speak-btn btn-icon flex items-center p-2 rounded-lg text-sm transition-all duration-200" title="Speak Source Text">
+                                <i class="fas fa-volume-up w-5 h-5"></i>
+                            </button>
+                            <button id="stopButtonA" onclick="stopSpeech()" disabled class="stop-btn btn-icon flex items-center p-2 rounded-lg text-sm transition-all duration-200 text-red-500 opacity-0" title="Stop Speaking">
+                                <i class="fas fa-stop w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <!-- END: Language A Speak/Stop Buttons -->
+                    </div>
+                    <div class="relative">
+                        <textarea id="inputTextA" 
+rows="5" 
+placeholder="Type here..." 
+class="w-full p-4 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 resize-y transition-all duration-300">
+</textarea>
+                        <button onclick="clearText('A')" class="clear-btn" title="Clear text">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="translateButtonContainer" 
+                   class="flex justify-center 
+                        col-span-full          
+                        order-2 md:order-3      
+                        -my-4 md:-my-5 md:-mt-4">       
+                    <button id="translateButton" onclick="handleTranslateButtonClick()" disabled class="py-3 px-8 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-150 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                        <svg class="w-6 h-6 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        Translate
+                    </button>
+                </div>
+                
+                <div id="columnB" class="space-y-2 order-3 md:order-2">
+                    <div class="flex items-center justify-between">
+                        <label id="labelB" for="inputTextB" class="block text-xl font-bold text-gray-800">Language B</label>
+                        <!-- START: Language B Speak/Stop Buttons -->
+                        <div class="flex items-center">
+                            <button id="speakButtonB" onclick="speakResult('B')" disabled class="speak-btn btn-icon flex items-center p-2 rounded-lg text-sm transition-all duration-200" title="Speak Translation">
+                                <i class="fas fa-volume-up w-5 h-5"></i>
+                            </button>
+                            <button id="stopButtonB" onclick="stopSpeech()" disabled class="stop-btn btn-icon flex items-center p-2 rounded-lg text-sm transition-all duration-200 text-red-500 opacity-0" title="Stop Speaking">
+                                <i class="fas fa-stop w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <!-- END: Language B Speak/Stop Buttons -->
+                    </div>
+                    
+                    <div class="relative">
+                        <textarea id="inputTextB" 
+rows="5" 
+placeholder="Translation appears here..." 
+class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 resize-y transition-all duration-300">
+</textarea>
+                  <button onclick="clearText('B')" class="clear-btn" title="Clear text">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <div id="definitionSection" class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <label class="block text-xl font-bold text-gray-800">
+                                <svg class="inline w-6 h-6 mr-1 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.208 5 7.5 5A6.495 6.495 0 003 11.5c0 1.638.583 3.167 1.581 4.391C5.69 17.51 7.243 18 9 18a6.5 6.5 0 006.5-6.5c0-1.638-.583-3.167-1.581-4.391C13.832 6.477 12.208 6 10.5 6A6.495 6.495 0 006 11.5c0 1.638.583 3.167 1.581 4.391C8.69 17.51 10.243 18 12 18z"></path></svg>
+                                Dictionary Definition
+                            </label>
+                            <!-- START: Definition Speak/Stop Buttons -->
+                            <div class="flex items-center">
+                                <button id="speakButtonDef" onclick="speakDefinition()" disabled class="speak-btn btn-icon flex items-center p-2 rounded-lg text-sm transition-all duration-200" title="Speak Definition">
+                                    <i class="fas fa-volume-up w-5 h-5"></i>
+                                </button>
+                                <button id="stopButtonDef" onclick="stopSpeech()" disabled class="stop-btn btn-icon flex items-center p-2 rounded-lg text-sm transition-all duration-200 text-red-500 opacity-0" title="Stop Speaking">
+                                    <i class="fas fa-stop w-5 h-5"></i>
+                                </button>
+                            </div>
+                            <!-- END: Definition Speak/Stop Buttons -->
+                        </div>
+                        <div id="definitionContent" class="w-full min-h-[100px] p-4 bg-blue-50 border border-blue-200 rounded-lg text-gray-700 leading-relaxed transition-all duration-300 relative">
+                            Definition for your source text will appear here.
+                        </div>
+                    </div>
+
+                    <div id="similarWordsSection" class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <label class="block text-xl font-bold text-gray-800">
+                                <svg class="inline w-6 h-6 mr-1 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                                Similar Words
+                            </label>
+                            <!-- START: Similar Words Speak/Stop Buttons -->
+                            <div class="flex items-center">
+                                <button id="speakButtonSimilarWords" onclick="speakAllSimilarWords()" disabled class="speak-btn btn-icon flex items-center p-2 rounded-lg text-sm transition-all duration-200" title="Speak Similar Words">
+                                    <i class="fas fa-volume-up w-5 h-5"></i>
+                                </button>
+                                <button id="stopButtonSimilarWords" onclick="stopSpeech()" disabled class="stop-btn btn-icon flex items-center p-2 rounded-lg text-sm transition-all duration-200 text-red-500 opacity-0" title="Stop Speaking">
+                                    <i class="fas fa-stop w-5 h-5"></i>
+                                </button>
+                            </div>
+                            <!-- END: Similar Words Speak/Stop Buttons -->
+                        </div>
+                        <div id="similarWordsContent" class="w-full min-h-[100px] p-4 bg-green-50 border border-green-200 rounded-lg text-gray-700 leading-relaxed transition-all duration-300 flex flex-wrap gap-2 items-start content-start relative">
+                            Synonyms for your source text will appear here.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <div id="imageSearchSection" class="space-y-4">
+                    <label class="block text-xl font-bold text-gray-800 dark:text-gray-100">
+                        <svg class="inline w-6 h-6 mr-1 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        Related Images
+                    </label>
+                    
+                    <div id="imageResults" class="w-full min-h-[150px] p-4 bg-gray-50 border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 flex flex-wrap gap-3 items-center content-start">
+                        Images related to your source text will appear here after translation.
+                    </div>
+                </div>
+            </div>
+
+            <div id="sources" class="mt-8 pt-6 border-t border-gray-200 hidden">
+                <p class="font-semibold text-sm text-gray-500 mb-1">Sources:</p>
+                <ul id="sourceList" class="list-disc list-inside text-xs text-gray-600 space-y-1"></ul>
+            </div>
+        </div>
+    </div>
+
+ <div id="contact-card" class="flex justify-center p-4 md:p-8">
+    <div class="w-full max-w-4xl bg-white card rounded-xl shadow-xl p-6 md:p-10 transition-all duration-300">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 text-center">Contact Us</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-6 text-center">We would love to hear from you!</p>
+        
+        <form class="space-y-4" id="contactForm" onsubmit="handleContactSubmit(event)" 
+            action="https://script.google.com/macros/s/AKfycbzvzTMXkNpzVW820iIvjGusUcwQdTn4omhTxPa7iU1TsVcYoUJ0rrLvHweyfMQ9hn5GQQ/exec" method="post">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="form-group">
+                    <input type="text" id="contactName" name="name" placeholder="Full Name" required 
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 transition-all duration-300">
+                    <span class="error-message text-xs text-red-500 hidden mt-1"></span>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="contactEmail" name="email" placeholder="Email Address" required 
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 transition-all duration-300">
+                    <span class="error-message text-xs text-red-500 hidden mt-1"></span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <input type="tel" id="contactPhone" name="phone" placeholder="Phone Number" required
+                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 transition-all duration-300">
+                <span class="error-message text-xs text-red-500 hidden mt-1"></span>
+            </div>
+            <div class="form-group">
+                <textarea rows="5" id="contactMessage" name="message" placeholder="Your Message" required 
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 resize-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 transition-all duration-300"></textarea>
+                <span class="error-message text-xs text-red-500 hidden mt-1"></span>
+            </div>
+            
+            <div id="status" class="status-box hidden p-3 rounded-lg text-sm font-semibold"></div>
+
+            <button type="submit" id="contactSubmitButton" class="w-full py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-150 shadow-md">
+                Send Message
+            </button>
+        </form>
+    </div>
+</div>
+</div>
+
+    
+    <div id="sidebar-backdrop" onclick="toggleSidebar()"></div>
+    <div id="sidebar">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center justify-between">
+            LexiVerse Menu
+            <button onclick="toggleSidebar()" class="text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </h2>
+        <nav class="space-y-2">
+            <a href="#" class="block p-3 rounded-lg text-lg font-medium text-indigo-600 hover:bg-indigo-50 transition duration-150 dark:text-indigo-300 dark:hover:bg-indigo-900">Home</a>
+            <a href="#app" class="block p-3 rounded-lg text-lg font-medium text-gray-700 hover:bg-indigo-50 transition duration-150 dark:text-gray-300 dark:hover:bg-indigo-900" onclick="closeSidebarAndScroll('#app')">Translator</a>
+            <a href="#definitionSection" class="block p-3 rounded-lg text-lg font-medium text-gray-700 hover:bg-indigo-50 transition duration-150 dark:text-gray-300 dark:hover:bg-indigo-900" onclick="closeSidebarAndScroll('#definitionSection')">Dictionary Definition</a>
+            <a href="#similarWordsSection" class="block p-3 rounded-lg text-lg font-medium text-gray-700 hover:bg-indigo-50 transition duration-150 dark:text-gray-300 dark:hover:bg-indigo-900" onclick="closeSidebarAndScroll('#similarWordsSection')">Similar Words</a>
+            <a href="#contact-card" class="block p-3 rounded-lg text-lg font-medium text-gray-700 hover:bg-indigo-50 transition duration-150 dark:text-gray-300 dark:hover:bg-indigo-900" onclick="closeSidebarAndScroll('#contact-card')">Contact Us</a>
+        </nav>
+
+        <div class="mt-8 pt-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
+            <button onclick="openAccountModal(); toggleSidebar()" class="w-full text-left p-3 rounded-lg text-base font-medium text-gray-700 hover:bg-indigo-50 dark:text-gray-300 dark:hover:bg-indigo-900 flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                Account
+            </button>
+            <button onclick="openHistoryModal(); toggleSidebar()" class="w-full text-left p-3 rounded-lg text-base font-medium text-gray-700 hover:bg-indigo-50 dark:text-gray-300 dark:hover:bg-indigo-900 flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                History
+            </button>
+             <button onclick="openSettingsModal(); toggleSidebar()" class="w-full text-left p-3 rounded-lg text-base font-medium text-gray-700 hover:bg-indigo-50 dark:text-gray-300 dark:hover:bg-indigo-900 flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                 Settings
+             </button>
+        </div>
+    </div>
+    
+    <div id="accountModal" class="modal-backdrop hidden" onclick="closeModalOnBackdrop(event, 'accountModal')">
+        <div class="modal-content w-full max-w-sm"> 
+            <button onclick="closeModal('accountModal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div id="authContainer"></div>
+             <p id="authMessage" class="mt-4 text-center text-sm font-medium text-red-500"></p>
+        </div>
+    </div>
+
+    <div id="historyModal" class="modal-backdrop hidden" onclick="closeModalOnBackdrop(event, 'historyModal')">
+        <div class="modal-content w-full max-w-2xl">
+            <button onclick="closeModal('historyModal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Search History</h2>
+            <p id="historyStatus" class="text-sm text-gray-500 mb-4"></p>
+            <button onclick="openClearHistoryConfirm()" id="clearHistoryButton" class="text-sm text-red-500 hover:text-red-700 mb-4 hidden">
+                Clear History
+            </button>
+            <div id="historyListContainer" class="space-y-3 max-h-96 overflow-y-auto"></div>
+        </div>
+    </div>
+
+    <div id="settingsModal" class="modal-backdrop hidden" onclick="closeModalOnBackdrop(event, 'settingsModal')">
+        <div class="modal-content w-full max-w-sm">
+            <button onclick="closeModal('settingsModal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Settings</h2>
+
+            <div class="space-y-6">
+                <div class="flex items-center justify-between p-4 rounded-lg border border-gray-200 dark:border-gray-700 transition-all duration-300">
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 mr-3 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                        <span class="font-medium text-gray-800 dark:text-gray-100">Dark Mode</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="darkModeToggle" value="" class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 dark:peer-focus:ring-indigo-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-600"></div>
+                    </label>
+                </div>
+
+                <div class="p-4 rounded-lg border border-gray-200 dark:border-gray-700 transition-all duration-300">
+                    <div class="flex items-center mb-3">
+                        <svg class="w-6 h-6 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.121-7.072a7 7 0 010 9.9M1.757 9.219L6 13.462V18h4.538l4.243 4.243a1 1 0 001.414 0 1 1 0 000-1.414L11.414 16H8V8.586l5.243-5.243a1 1 0 000-1.414 1 1 0 00-1.414 0L6 7.586V3.757a1 1 0 00-1.414 0 1 1 0 000 1.414L3.086 7H1.757a1 1 0 00-1 1V16a1 1 0 001 1h.757l-.378.378a1 1 0 000 1.414 1 1 0 001.414 0L6 18.414V20a1 1 0 001.707.707L12 16.414l5.293 5.293a1 1 0 001.414 0 1 1 0 000-1.414L13.414 16H16a1 1 0 001-1V9a1 1 0 00-1-1H1.757z"></path></svg>
+                        <label class="font-medium text-gray-800 dark:text-gray-100">Audio Voice</label>
+                    </div>
+                    <select id="voiceSelect" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 transition-all duration-300">
+                        <option value="Orus">Male Voice (Orus)</option>
+                        <option value="Keisha">Female Voice (Keisha)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="clearHistoryConfirmModal" class="modal-backdrop hidden" onclick="closeModalOnBackdrop(event, 'clearHistoryConfirmModal')">
+        <div class="modal-content w-full max-w-sm text-center">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Confirm Clear History</h3>
+            <p class="text-gray-600 mb-6">Are you sure you want to clear your entire search history? This cannot be undone.</p>
+            <div class="flex justify-around space-x-4">
+                <button onclick="closeModal('clearHistoryConfirmModal')" class="w-full py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 transition duration-150">
+                    Cancel
+                </button>
+                <button onclick="clearHistoryConfirmed()" class="w-full py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition duration-150">
+                    Yes, Clear History
+                </button>
+            </div>
+        </div>
+    </div>
+ <div id="statusToast" 
+     class="fixed bottom-5 left-1/2 transform -translate-x-1/2 p-4 rounded-lg shadow-2xl z-[1000] min-w-[300px] text-center opacity-0 transition-all duration-300 pointer-events-none"
+     role="alert">
+    <div class="flex items-center justify-center space-x-2">
+        <span id="toastIcon"></span> 
+        <span id="toastMessage" class="font-semibold"></span>
+    </div>
+ </div>
+<script src="script/script.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+      .register('./sw.js')
+      .then(() => { console.log('Service Worker Registered'); });
+  }
+</script>
+
+</body>
+</html>
