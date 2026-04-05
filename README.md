@@ -223,11 +223,3 @@ Please ensure your code follows the existing style and that any new features are
 </div>
 
 ---
-
-<div align="center">
-
-Made with ❤️ by **Manikandan N**
-
-⭐ **If you found this useful, please give it a star!** ⭐
-
-</div>
