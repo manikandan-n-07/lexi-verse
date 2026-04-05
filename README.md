@@ -6,9 +6,7 @@
 
 ### *Instant Translator & Dictionary — Speak Every Language*
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_App-4f46e5?style=for-the-badge)](https://your-demo-link.com)
-[![PWA Ready](https://img.shields.io/badge/PWA-Ready-5cb85c?style=for-the-badge&logo=pwa)](https://your-demo-link.com)
-[![GitHub Pages](https://img.shields.io/badge/Deployed_on-GitHub_Pages-222?style=for-the-badge&logo=github)](https://your-username.github.io/lexi-verse)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_App-4f46e5?style=for-the-badge)](https://manikandan-n-07.github.io/lexi-verse/)
 [![Author](https://img.shields.io/badge/Author-Manikandan_N-ff6b6b?style=for-the-badge&logo=github)](https://github.com/manikandan-n-07)
 
 </div>
@@ -18,7 +16,6 @@
 ## Table of Contents
 
 - [What is LexiVerse?](#what-is-lexiverse)
-- [Preview](#preview)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
@@ -38,12 +35,6 @@
 
 > *"Breaking language barriers, one word at a time."*
 
----
-
-## Preview
-
-<img src="src/img/page.jpg" alt="Page' width="200" height="100"/>
----
 
 ## Features
 
@@ -221,7 +212,7 @@ Please ensure your code follows the existing style and that any new features are
 
 <div align="center">
 
-### Manikandan N
+# Manikandan N
 
 *Full Stack Developer & Creator of LexiVerse*
 
